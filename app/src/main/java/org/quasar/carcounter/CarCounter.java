@@ -86,8 +86,11 @@ public class CarCounter {
    * @param date
    * @param cars
    */
-  public record CarsPerDay(String date, Long cars) {
-
+  public record CarsPerDay(String date, Long cars) implements Formattable {
+    @Override
+    public String toFormat() {
+      return "%s %s".formatted(date, cars);
+    }
   }
 
   /*

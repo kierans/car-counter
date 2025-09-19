@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
+
 /*
  * The implementations of the methods are not optimized for performance.
  *
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 public class CarCounter {
   private final List<Period> periods;
 
-  public CarCounter(final List<Period> periods) {
+  public CarCounter(final @NotNull List<Period> periods) {
     this.periods = periods;
   }
 
@@ -50,7 +52,8 @@ public class CarCounter {
    */
   public List<Period> leastUsageWindow() {
     // iterate over the periods, finding 90-minute windows.
-    return periods.stream().reduce(new LeastUsageWindowData(),
+    return periods.stream().reduce(
+      new LeastUsageWindowData(),
       (acc, current) -> {
         if (acc.previous != null) {
           if (isContiguous(acc.previous, current)) {
@@ -86,7 +89,7 @@ public class CarCounter {
    * @param date
    * @param cars
    */
-  public record CarsPerDay(String date, Long cars) implements Formattable {
+  public record CarsPerDay(@NotNull String date, @NotNull Long cars) implements Formattable {
     @Override
     public String toFormat() {
       return "%s %s".formatted(date, cars);

@@ -1,6 +1,8 @@
 package org.quasar.carcounter;
 
-public record Period (String date, String time, Long numCars) implements Formattable {
+import org.jetbrains.annotations.NotNull;
+
+public record Period (@NotNull String date, @NotNull String time, @NotNull Long numCars) implements Formattable {
   public String toISO() {
     return "%sT%s".formatted(date, time);
   }

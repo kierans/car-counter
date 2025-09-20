@@ -20,8 +20,8 @@ public class LeastUsageWindow {
   private Period previous = null;
 
   public List<Period> getLeastUsageWindow() {
-    // if the last WINDOW_SIZE periods have formed a new window, then we need to check it.
-    checkForNewWindow();
+    // if the last WINDOW_SIZE periods have formed a new window, then we need to check for it.
+    checkForUsageWindow();
 
     return leastUsageWindow;
   }
@@ -45,7 +45,7 @@ public class LeastUsageWindow {
 
   private void checkForNewWindowWithPeriod(final Period current) {
     if (isContiguous(previous, current)) {
-      if (checkForNewWindow()) {
+      if (checkForUsageWindow()) {
         // remove the top of the window to allow for a new window to be possibly found.
         // this effectively implements a sliding window over a list of contiguous periods
         slidingWindow.remove();
@@ -53,14 +53,14 @@ public class LeastUsageWindow {
     }
     else {
       // check if a window has been found already.
-      checkForNewWindow();
+      checkForUsageWindow();
 
       // start a new window
       slidingWindow.clear();
     }
   }
 
-  private boolean checkForNewWindow() {
+  private boolean checkForUsageWindow() {
     if (haveUsageWindow(slidingWindow)) {
       checkForLeastUsage();
 

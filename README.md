@@ -25,6 +25,7 @@ Uses Java 21.
 Due to the way Gradle resolves files, using absolute paths is required.
 
 ```bash
+# For the first run, omit the -q flag as Gradle will have to download tooling and compile app; so you'll want to see progress
 $ ./gradlew -q --console plain run --args="$(pwd)/sample.txt"
 ```
 

@@ -13,9 +13,8 @@ public class Lexer {
     if (matcher.matches()) {
       return new Period(matcher.group(1), matcher.group(2), Long.valueOf(matcher.group(3)));
     }
-    else {
-      throw new IllegalArgumentException("Invalid data: " + data);
-    }
+
+    throw new IllegalArgumentException("Invalid data: " + data);
   }
 
   public List<Period> parse(final @NotNull List<String> data) {

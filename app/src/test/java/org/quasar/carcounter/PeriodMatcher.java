@@ -1,37 +1,39 @@
 package org.quasar.carcounter;
 
+import java.time.LocalDateTime;
+
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 public class PeriodMatcher extends TypeSafeMatcher<Period> {
-  private final String date;
-  private final String time;
+  private final LocalDateTime timestamp;
   private final Long numCars;
 
-  public PeriodMatcher(final String date, final String time, final Long numCars) {
-    this.date = date;
-    this.time = time;
+  public PeriodMatcher(final LocalDateTime timestamp, final Long numCars) {
+    this.timestamp = timestamp;
     this.numCars = numCars;
   }
 
   @Override
   protected boolean matchesSafely(final Period period) {
-    return period.date().equals(this.date) && period.time().equals(this.time) && period.numCars().equals(this.numCars);
+    return period.timestamp().equals(this.timestamp) && period.numCars().equals(this.numCars);
   }
 
   @Override
   public void describeTo(final Description description) {
     description
-      .appendText("Period{date=")
-      .appendValue(date)
-      .appendText(", time=")
-      .appendValue(time)
+      .appendText("Period{timestamp=")
+      .appendValue(timestamp)
       .appendText(", numCars=")
       .appendValue(numCars)
       .appendText("}");
   }
 
+  public static PeriodMatcher aPeriod(final String timestamp, final Long numCars) {
+    return new PeriodMatcher(LocalDateTime.parse(timestamp), numCars);
+  }
+
   public static PeriodMatcher aPeriod(final String date, final String time, final Long numCars) {
-    return new PeriodMatcher(date, time, numCars);
+    return aPeriod("%sT%s".formatted(date, time), numCars);
   }
 }

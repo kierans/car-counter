@@ -24,13 +24,12 @@ public class LexerTest {
 
   @Test
   public void shouldParsePeriod() {
-    final String date = "2021-12-01";
-    final String time = "05:00:00";
+    final String timestamp = "2021-12-01T05:00:00";
     final String cars = "5";
 
-    final Period result = lexer.parse(toInputFormat(date, time, cars));
+    final Period result = lexer.parse(toInputFormat(timestamp, cars));
 
-    assertThat(result, is(aPeriod(date, time, Long.valueOf(cars))));
+    assertThat(result, is(aPeriod(timestamp, Long.valueOf(cars))));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -56,7 +55,11 @@ public class LexerTest {
     assertThat(result.get(1), is(aPeriod(date, time2, Long.valueOf(cars))));
   }
 
+  private String toInputFormat(String timestamp, String cars) {
+    return "%s %s".formatted(timestamp, cars);
+  }
+
   private String toInputFormat(String date, String time, String cars) {
-    return "%sT%s %s".formatted(date, time, cars);
+    return toInputFormat("%sT%s".formatted(date, time), cars);
   }
 }

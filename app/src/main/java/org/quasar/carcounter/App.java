@@ -18,13 +18,17 @@ public class App {
 
     final CarCounter carCounter = new CarCounter(periods);
 
-    System.out.printf("%d%n", carCounter.totalCars());
-    printList(carCounter.carsPerDay());
-    printList(carCounter.topUsagePeriods());
-    printList(carCounter.leastUsageWindow());
+    print(carCounter.totalCars());
+    print(carCounter.carsPerDay());
+    print(carCounter.topUsagePeriods());
+    print(carCounter.leastUsageWindow());
   }
 
-  private static void printList(final List<? extends Formattable> list) {
+  private static void print(final List<? extends Formattable> list) {
     list.stream().map(Formattable::toFormat).forEach(System.out::println);
+  }
+
+  private static void print(final Long cars) {
+    System.out.printf("%d%n", cars);
   }
 }

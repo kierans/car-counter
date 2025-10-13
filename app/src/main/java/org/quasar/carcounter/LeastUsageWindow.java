@@ -1,6 +1,5 @@
 package org.quasar.carcounter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,7 +71,7 @@ public class LeastUsageWindow {
 
   /*
    * If the `slidingWindow` list has fewer cars than the `leastUsageWindow` then a new list is set to
-   * prevent mutation issues to the same list due to shared references.
+   * prevent mutation issues due to shared references to the same list.
    */
   private void checkForLeastUsage() {
     /*
@@ -92,7 +91,7 @@ public class LeastUsageWindow {
    * Two periods are contiguous if they are within 30 minutes of each other.
    */
   private static boolean isContiguous(final Period earlier, final Period later) {
-    return LocalDateTime.parse(earlier.toISO()).plusMinutes(30).equals(LocalDateTime.parse(later.toISO()));
+    return earlier.timestamp().plusMinutes(30).equals(later.timestamp());
   }
 
   private static Long sumNumCars(final List<Period> periods) {
